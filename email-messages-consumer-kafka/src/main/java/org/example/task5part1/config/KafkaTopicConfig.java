@@ -12,7 +12,7 @@ public class KafkaTopicConfig {
     private String simpleEmailTopic;
 
     @Bean
-    public NewTopic paymentReceivedTopic() {
+    public NewTopic simpleEmailTopic() {
         return new NewTopic(simpleEmailTopic, 2, (short) 1);
     }
 
