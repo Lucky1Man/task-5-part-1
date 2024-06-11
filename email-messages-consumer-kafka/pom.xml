@@ -15,9 +15,15 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-dotenv.version>4.0.0</spring-dotenv.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>${spring-dotenv.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>email-messages-kafka</artifactId>

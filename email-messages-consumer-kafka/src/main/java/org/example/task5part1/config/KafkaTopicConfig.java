@@ -1,15 +1,18 @@
 package org.example.task5part1.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class KafkaTopicConfig {
 
-    @Value("${kafka.topic.simpleEmail}")
-    private String simpleEmailTopic;
+    private final String simpleEmailTopic;
+
+    public KafkaTopicConfig(@Qualifier("simpleEmailTopicText") String simpleEmailTopic) {
+        this.simpleEmailTopic = simpleEmailTopic;
+    }
 
     @Bean
     public NewTopic simpleEmailTopic() {

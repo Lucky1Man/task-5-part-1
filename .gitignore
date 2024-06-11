@@ -1,4 +1,6 @@
 HELP.md
+.env
+*secured.properties
 target/
 elasticsearch-data/
 !.mvn/wrapper/maven-wrapper.jar

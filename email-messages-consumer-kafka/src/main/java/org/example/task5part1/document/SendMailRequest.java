@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Document(
         indexName = "mails_registry"
@@ -23,9 +24,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
 public class SendMailRequest {
+    @Id
+    private UUID id;
     @Email
     @Field(name = "from")
-    @Id
     private String from;
     @Field(name = "to")
     private List<@Email String> to;
