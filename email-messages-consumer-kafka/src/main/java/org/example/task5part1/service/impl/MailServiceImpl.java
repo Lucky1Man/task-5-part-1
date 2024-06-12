@@ -41,7 +41,7 @@ public class MailServiceImpl implements MailService {
         try {
             mailSenderService.send(emailDto);
             saved.setSendStatus(SendStatus.SENT);
-        } catch (MailException ex) {
+        } catch (RuntimeException ex) {
             saved.setSendStatus(SendStatus.ERROR);
             saved.setErrorMessage(ex.getMessage());
         } finally {
