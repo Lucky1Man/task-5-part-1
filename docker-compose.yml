@@ -12,12 +12,15 @@ services:
     container_name: kafka
     ports:
       - '9092:9092'
+      - '9093:9093'
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_CFG_LISTENERS=LOCAL://0.0.0.0:9092,DOCKER://0.0.0.0:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=LOCAL://127.0.0.1:9092,DOCKER://kafka:9093
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LOCAL
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=LOCAL:PLAINTEXT,DOCKER:PLAINTEXT
     depends_on:
       - zookeeper
   elasticsearch:
@@ -38,5 +41,16 @@ services:
       - '5601:5601'
     depends_on:
       - elasticsearch
-
-
+  email-messages-consumer:
+    build:
+      context: /email-messages-consumer-kafka
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: email-messages-consumer
+    environment:
+      - KAFKA_ADDRESS=kafka:9093
+      - ELASTIC_ADDRESS=elasticsearch:9200
+    depends_on:
+      - kafka
+      - elasticsearch
